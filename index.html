@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DoWH WebGIS | Bridges & Culverts</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <img class="logo" src="images/dowh-logo.jpg" alt="Department of Works and Highways logo">
+  <div class="brand"><h1>MOROBE DEPARTMENT OF WORKS AND HIGHWAYS</h1><p>Infrastructure WebGIS · Morobe Province, Papua New Guinea</p></div>
+  <div class="brand-tag">ASSET MANAGEMENT</div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="menu-label">WORKSPACE</div>
+    <button class="nav active" data-filter="all">▦ &nbsp; Overview</button>
+    <button class="nav" data-filter="bridge">⌁ &nbsp; Bridges</button>
+    <button class="nav" data-filter="culvert">▤ &nbsp; Culverts</button>
+    <button class="nav" id="go-asset-map">⌖ &nbsp; Asset location map</button>
+    <div class="side-note"><strong>Data source</strong><p>Loaded from your two uploaded coordinate spreadsheets.</p><p class="small">Confirm coordinates and field values before using this for official decisions.</p></div>
+  </aside>
+  <main class="content">
+    <div class="heading">
+      <div><div class="eyebrow">GEOGRAPHIC INFORMATION SYSTEM</div><h2 id="view-title">Bridge &amp; culvert dashboard</h2><p>Choose Overview to see all assets, Bridges for bridges only, or Culverts for culverts only. Select a register row to inspect its details.</p></div>
+      <button id="reset" class="btn-secondary">Fit all assets</button>
+    </div>
+    <section class="kpis">
+      <article class="kpi" id="bridge-kpi"><span class="kpi-symbol">⌁</span><div><label>Bridges</label><strong id="bridge-count">0</strong><small>From bridge coordinate file</small></div></article>
+      <article class="kpi" id="culvert-kpi"><span class="kpi-symbol">▤</span><div><label>Culverts</label><strong id="culvert-count">0</strong><small>From culvert coordinate file</small></div></article>
+      <article class="kpi" id="poor-kpi"><span class="kpi-symbol alert">!</span><div><label>Poor condition</label><strong id="poor-count">0</strong><small>Bridge and culvert assets</small></div></article>
+    </section>
+    <section class="workspace">
+      <div class="map-card">
+        <div class="card-head map-card-head"><div><h3>Asset location map</h3><p>Overview shows both layers. Choose Bridges or Culverts in the left menu to show only that asset type.</p></div><div class="map-tools"><div class="map-mode" role="group" aria-label="Map view"><span class="map-mode-btn active">Detailed QGIS map</span></div><div class="legend"><span><i class="dot bridge-dot"></i> Bridge</span><span><i class="dot culvert-dot"></i> Culvert</span></div></div></div>
+        <div id="qgis-map-wrap"><iframe id="qgis-map-frame" title="Interactive QGIS bridge and culvert asset map" src="qgis-map/index.html" loading="eager"></iframe></div>
+        <div id="map" class="dashboard-map-hidden" aria-label="Hidden dashboard marker map"></div>
+      </div>
+      <aside class="details-card" aria-live="polite">
+        <div class="card-head"><div><h3>Asset details</h3><p>Select a bridge or culvert in the asset register to view its available attributes here.</p></div></div>
+        <div id="asset-details-content" class="detail-content"><div class="empty-state">No asset selected yet. Select a bridge or culvert row in the asset register. Its available attributes will appear here.</div></div>
+      </aside>
+    </section>
+    <section class="table-card">
+      <div class="table-head"><div><h3>Asset register</h3><p id="table-subtitle">All records from both files</p>
+        <div class="data-actions"><label for="csv-upload" class="btn-secondary upload-button">Upload new CSV</label><input id="csv-upload" type="file" accept=".csv,text/csv" hidden><button id="export-all" class="btn-secondary" type="button">Export all CSV</button></div><p id="upload-status" class="upload-status" aria-live="polite">Upload a bridge CSV, culvert CSV, or combined asset CSV to update this session.</p></div>
+        <div class="filters">
+          <input id="search" type="search" placeholder="Search ID, name, road…">
+          <select id="condition"><option value="all">All conditions</option><option>Good</option><option>Fair</option><option>Poor</option></select>
+          <select id="type"><option value="all">Bridges &amp; culverts</option><option value="bridge">Bridges only</option><option value="culvert">Culverts only</option></select>
+        </div>
+      </div>
+      <div class="table-wrap"><table><thead id="table-head"></thead><tbody id="table-body"></tbody></table></div>
+      <div class="table-foot"><span id="record-count">0 records</span><button id="export" class="btn-yellow">Export filtered CSV</button></div>
+    </section>
+    <footer>DoWH WebGIS prototype · Front-end demonstration · Verify source records before operational use.</footer>
+  </main>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="data/assets.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
